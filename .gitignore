@@ -61,6 +61,7 @@ local_settings.py
 db.sqlite3
 db.sqlite3-journal
 private_key.py
+migrations
 
 # Flask stuff:
 instance/
@@ -217,3 +218,7 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+
+#frontend
+node_modules
