@@ -1,8 +1,9 @@
+const { resolve } = require("dns");
 const path = require("path");
 const webpack = require("webpack");
 
 module.exports = {
-  entry: "./src/index.js",
+  entry: "./src/index.jsx",
   output: {
     path: path.resolve(__dirname, "./static/frontend"),
     filename: "[name].js",
@@ -10,13 +11,16 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
           loader: "babel-loader",
         },
       },
     ],
+  },
+  resolve: {
+    extensions: [".js", ".jsx"],
   },
   optimization: {
     minimize: true,
