@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
@@ -15,6 +16,7 @@ export default function CreateRoomPage() {
   const defaultVotes = 2;
   const [guessCanPause, setGuessCanPause] = useState(true);
   const [votesToSkip, setVotesToSkip] = useState(defaultVotes);
+  const navigate = useNavigate();
 
   function handleVotesChange(e) {
     if (e.target.value === "") {
@@ -48,7 +50,7 @@ export default function CreateRoomPage() {
     };
     fetch("/api/create-room", requestOptions)
       .then((response) => response.json())
-      .then((data) => console.log(data));
+      .then((data) => navigate("/room/" + data.code));
   }
 
   return (
