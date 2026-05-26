@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import RoomJoinPage from "./RoomJoinPage";
 import CreateRoomPage from "./CreateRoomPage";
+import RenderHomePage from "./RenderHomePage";
 import Room from "./Room";
 import { Grid, Button, ButtonGroup, Typography } from "@mui/material";
 
@@ -22,28 +23,6 @@ export default function HomePage() {
       });
   }, []);
 
-  function renderHomePage() {
-    return (
-      <Grid container spacing={3} direction="column" alignItems="center">
-        <Grid item xs={12}>
-          <Typography variant="h3" component="h3">
-            House Party
-          </Typography>
-        </Grid>
-        <Grid item xs={12} align="center">
-          <ButtonGroup disableElevation variant="contained" color="primary">
-            <Button color="primary" to="/join" component={Link}>
-              Join a Room
-            </Button>
-            <Button color="secondary" to="/create" component={Link}>
-              Create a Room
-            </Button>
-          </ButtonGroup>
-        </Grid>
-      </Grid>
-    );
-  }
-
   function clearRoomCode() {
     setRoomCode(null);
   }
@@ -54,7 +33,7 @@ export default function HomePage() {
         <Route
           path="/"
           element={
-            roomCode ? <Navigate to={`/room/${roomCode}`} /> : renderHomePage()
+            roomCode ? <Navigate to={`/room/${roomCode}`} /> : RenderHomePage()
           }
         />
         <Route path="/join" element={<RoomJoinPage />} />
