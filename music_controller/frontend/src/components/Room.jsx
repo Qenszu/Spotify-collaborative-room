@@ -2,11 +2,14 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Grid, Button, Typography } from "@mui/material";
+import RenderSettingsButton from "./RenderSettingsButton";
+import RenderSettings from "./RenderSettings";
 
 export default function Room({ leaveRoomCallback }) {
   const [guessCanPause, setGuessCanPause] = useState(false);
   const [voteToSkip, setVoteToSkip] = useState(2);
   const [isHost, setIsHost] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
 
   const { roomCode } = useParams();
   const navigate = useNavigate();
@@ -38,6 +41,14 @@ export default function Room({ leaveRoomCallback }) {
     });
   }
 
+  if (showSettings) {
+    return RenderSettings({
+      voteToSkip,
+      guessCanPause,
+      roomCode,
+      setShowSettings,
+    });
+  }
   return (
     <Grid container spacing={2} direction="column" alignItems="center">
       <Grid item xs={12} align="center">
@@ -60,6 +71,7 @@ export default function Room({ leaveRoomCallback }) {
           Host: {isHost ? "True" : "False"}
         </Typography>
       </Grid>
+      {isHost ? RenderSettingsButton({ showSettings, setShowSettings }) : null}
       <Grid item xs={12} align="center">
         <Button
           variant="contained"
