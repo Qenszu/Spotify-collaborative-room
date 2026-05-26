@@ -7,22 +7,23 @@ export default function RenderSettings({
   guessCanPause,
   roomCode,
   setShowSettings,
+  getRoomDetails,
 }) {
   return (
     <Grid container spacing={2} direction="column">
       <Grid item xs={12} align="center">
         <CreateRoomPage
-          update={true}
+          title={"Update Settings"}
           voteToSkip={voteToSkip}
           guessCanPause={guessCanPause}
           roomCode={roomCode}
-          updateCallback={null}
+          updateCallback={getRoomDetails}
         />
       </Grid>
       <Grid item xs={12} align="center">
         <Button
           variant="contained"
-          color="primary"
+          color="secondary"
           onClick={() => setShowSettings(false)}
         >
           Close

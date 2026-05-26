@@ -37,7 +37,10 @@ export default function HomePage() {
           }
         />
         <Route path="/join" element={<RoomJoinPage />} />
-        <Route path="/create" element={<CreateRoomPage />} />
+        <Route
+          path="/create"
+          element={<CreateRoomPage title={"Create a Room"} />}
+        />
         <Route
           path="/room/:roomCode"
           element={<Room leaveRoomCallback={clearRoomCode} />}
