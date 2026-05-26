@@ -14,7 +14,7 @@ export default function Room({ leaveRoomCallback }) {
   const { roomCode } = useParams();
   const navigate = useNavigate();
 
-  useEffect(() => {
+  function getRoomDetails() {
     fetch("/api/get-room" + "?code=" + roomCode)
       .then((response) => {
         if (!response.ok) {
@@ -28,6 +28,10 @@ export default function Room({ leaveRoomCallback }) {
         setGuessCanPause(data.guess_can_pause);
         setIsHost(data.is_host);
       });
+  }
+
+  useEffect(() => {
+    getRoomDetails();
   }, [roomCode]);
 
   function leaveButtonPressed() {
@@ -47,6 +51,7 @@ export default function Room({ leaveRoomCallback }) {
       guessCanPause,
       roomCode,
       setShowSettings,
+      getRoomDetails,
     });
   }
   return (
