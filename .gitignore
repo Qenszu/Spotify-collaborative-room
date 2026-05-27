@@ -224,4 +224,4 @@ __marimo__/
 node_modules
 
 #Spotify
-credentials
+credentials.py
