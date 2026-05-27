@@ -4,6 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Grid, Button, Typography } from "@mui/material";
 import RenderSettingsButton from "./RenderSettingsButton";
 import RenderSettings from "./RenderSettings";
+import MusicPlayer from "./MusicPlayer";
 
 export default function Room({ leaveRoomCallback }) {
   const [guessCanPause, setGuessCanPause] = useState(false);
@@ -11,6 +12,7 @@ export default function Room({ leaveRoomCallback }) {
   const [isHost, setIsHost] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [spotifyAuthenticated, setSpotifyAuthenticated] = useState(false);
+  const [song, setSong] = useState({});
 
   const { roomCode } = useParams();
   const navigate = useNavigate();
@@ -54,6 +56,30 @@ export default function Room({ leaveRoomCallback }) {
     getRoomDetails();
   }, [roomCode]);
 
+  function getCurrentSong() {
+    fetch("/spotify/current-song")
+      .then((response) => {
+        if (response.status === 204 || !response.ok) {
+          return {};
+        } else {
+          return response.json();
+        }
+      })
+      .then((data) => {
+        setSong(data);
+        console.log(data);
+      });
+  }
+
+  useEffect(() => {
+    getCurrentSong();
+    const interval = setInterval(getCurrentSong, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
   function leaveButtonPressed() {
     const requestOptions = {
       method: "POST",
@@ -81,21 +107,7 @@ export default function Room({ leaveRoomCallback }) {
           Code: {roomCode}
         </Typography>
       </Grid>
-      <Grid item xs={12} align="center">
-        <Typography variant="h6" component="h6">
-          Votes: {voteToSkip}
-        </Typography>
-      </Grid>
-      <Grid item xs={12} align="center">
-        <Typography variant="h6" component="h6">
-          Guess can pause: {guessCanPause ? "Yes, they can" : "No, they cannot"}
-        </Typography>
-      </Grid>
-      <Grid item xs={12} align="center">
-        <Typography variant="h6" component="h6">
-          Host: {isHost ? "True" : "False"}
-        </Typography>
-      </Grid>
+      <MusicPlayer {...song} />
       {isHost ? RenderSettingsButton({ showSettings, setShowSettings }) : null}
       <Grid item xs={12} align="center">
         <Button
