@@ -10,6 +10,7 @@ import RoomJoinPage from "./RoomJoinPage";
 import CreateRoomPage from "./CreateRoomPage";
 import RenderHomePage from "./RenderHomePage";
 import Room from "./Room";
+import Info from "./Info";
 import { Grid, Button, ButtonGroup, Typography } from "@mui/material";
 
 export default function HomePage() {
@@ -37,6 +38,7 @@ export default function HomePage() {
           }
         />
         <Route path="/join" element={<RoomJoinPage />} />
+        <Route path="/info" element={<Info />} />
         <Route
           path="/create"
           element={<CreateRoomPage title={"Create a Room"} />}

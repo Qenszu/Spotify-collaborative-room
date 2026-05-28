@@ -1,5 +1,4 @@
 import React from "react";
-import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import { LinearProgress } from "@mui/material";
 import Card from "@mui/material/Card";
@@ -19,9 +18,33 @@ export default function MusicPlayer({
   time,
   duration,
   is_playing,
+  votes,
+  votes_required,
 }) {
   const songProgress = duration > 0 ? (time / duration) * 100 : 0;
-  const theme = useTheme();
+
+  function pauseSong() {
+    const requestOptions = {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+    };
+    fetch("/spotify/pause", requestOptions);
+  }
+  function playSong() {
+    const requestOptions = {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+    };
+    fetch("/spotify/play", requestOptions);
+  }
+
+  function skipSong() {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    };
+    fetch("/spotify/skip", requestOptions);
+  }
 
   return (
     <Card
@@ -58,26 +81,20 @@ export default function MusicPlayer({
           </CardContent>
 
           <Box sx={{ display: "flex", alignItems: "center", pl: 1, pb: 1 }}>
-            <IconButton aria-label="previous">
-              {theme.direction === "rtl" ? (
-                <SkipNextIcon />
-              ) : (
-                <SkipPreviousIcon />
-              )}
-            </IconButton>
-            <IconButton aria-label="play/pause" size="large">
+            <IconButton
+              aria-label="play/pause"
+              size="large"
+              onClick={() => (is_playing ? pauseSong() : playSong())}
+            >
               {is_playing ? (
                 <PauseIcon fontSize="large" />
               ) : (
                 <PlayArrowIcon fontSize="large" />
               )}
             </IconButton>
-            <IconButton aria-label="next">
-              {theme.direction === "rtl" ? (
-                <SkipPreviousIcon />
-              ) : (
-                <SkipNextIcon />
-              )}
+            <IconButton aria-label="next" onClick={() => skipSong()}>
+              {votes} / {votes_required}
+              <SkipNextIcon />
             </IconButton>
           </Box>
         </Box>
