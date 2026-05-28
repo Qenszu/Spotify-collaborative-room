@@ -12,7 +12,7 @@ export default function Room({ leaveRoomCallback }) {
   const [isHost, setIsHost] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [spotifyAuthenticated, setSpotifyAuthenticated] = useState(false);
-  const [song, setSong] = useState({});
+  const [song, setSong] = useState(null);
 
   const { roomCode } = useParams();
   const navigate = useNavigate();
@@ -60,14 +60,13 @@ export default function Room({ leaveRoomCallback }) {
     fetch("/spotify/current-song")
       .then((response) => {
         if (response.status === 204 || !response.ok) {
-          return {};
+          return null;
         } else {
           return response.json();
         }
       })
       .then((data) => {
         setSong(data);
-        console.log(data);
       });
   }
 
@@ -107,7 +106,14 @@ export default function Room({ leaveRoomCallback }) {
           Code: {roomCode}
         </Typography>
       </Grid>
-      <MusicPlayer {...song} />
+      {!song ? (
+        <Grid item xs={12} align="center">
+          <p>Play music on spotify to start</p>
+        </Grid>
+      ) : (
+        <MusicPlayer {...song} />
+      )}
+
       {isHost ? RenderSettingsButton({ showSettings, setShowSettings }) : null}
       <Grid item xs={12} align="center">
         <Button

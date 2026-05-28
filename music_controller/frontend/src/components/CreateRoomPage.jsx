@@ -83,7 +83,7 @@ export default function CreateRoomPage({
 
   function renderCreateButtons() {
     return (
-      <Grid container spacing={1}>
+      <Grid container spacing={1} direction="column">
         <Grid item xs={12} align="center">
           <Button
             color="primary"

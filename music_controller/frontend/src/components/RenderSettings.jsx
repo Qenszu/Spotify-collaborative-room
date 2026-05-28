@@ -14,7 +14,7 @@ export default function RenderSettings({
       <Grid item xs={12} align="center">
         <CreateRoomPage
           title={"Update Settings"}
-          voteToSkip={voteToSkip}
+          votesToSkip={voteToSkip}
           guessCanPause={guessCanPause}
           roomCode={roomCode}
           updateCallback={getRoomDetails}
